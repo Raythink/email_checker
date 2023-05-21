@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>编辑联系人</h1>
+
+<form method="post">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.first_name.label() }}
+        {{ form.first_name(class='form-control') }}
+        {% if form.first_name.errors %}
+        <div class="invalid-feedback">
+            {{ form.first_name.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form.last_name.label() }}
+        {{ form.last_name(class='form-control') }}
+        {% if form.last_name.errors %}
+        <div class="invalid-feedback">
+            {{ form.last_name.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form.tel1.label() }}
+        {{ form.tel1(class='form-control') }}
+        {% if form.tel1.errors %}
+        <div class="invalid-feedback">
+            {{ form.tel1.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form.tel2.label() }}
+        {{ form.tel2(class='form-control') }}
+        {% if form.tel2.errors %}
+        <div class="invalid-feedback">
+            {{ form.tel2.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="form-group">
+        {{ form.email.label() }}
+        {{ form.email(class='form-control') }}
+        {% if form.email.errors %}
+        <div class="invalid-feedback">
+            {{ form.email.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-success">更新</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">取消</a>
+
+</form>
+{% endblock %}

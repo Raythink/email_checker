@@ -1,0 +1,20 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>导入联系人</h1>
+<p>必须要有email列，可选列：first_name, last_name, tel1, tel2</p>
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      {{ form.csv_file.label() }}
+      {{ form.csv_file(class='form-control-file') }}
+      {% if form.csv_file.errors %}
+        <div class="invalid-feedback">
+          {{ form.csv_file.errors[0] }}
+        </div>
+      {% endif %}
+    </div><br/>
+    <button type="submit" class="btn btn-success">导入</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">取消</a>
+  </form>
+{% endblock %}

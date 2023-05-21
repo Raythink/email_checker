@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>联系人列表</h1>
+
+<div class="search-container">
+    <form method="get" action="{{ url_for('contacts') }}">
+        <input type="text" name="search_term" value="{{ search_term }}" placeholder="名字/Email 搜索">
+        <input type="text" name="email_validate_code" value="{{ email_validate_code }}" placeholder="MX代码">
+        <button type="submit">搜索</button>
+    </form>
+</div>
+{{ pagination.info }}
+{{ pagination.links }}
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>名</th>
+        <th>姓</th>
+        <th>电话1</th>
+        <th>电话2</th>
+        <th>电子邮件地址</th>
+        <th>验证日期</th>
+        <th>MX代码</th>
+        <th>MX信息</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contacts %}
+    <tr>
+        <td>{{ loop.index + pagination.skip }}</td>
+        <td>{{ contact.first_name }}</td>
+        <td>{{ contact.last_name }}</td>
+        <td>{{ contact.tel1 }}</td>
+        <td>{{ contact.tel2 }}</td>
+        <td>{{ contact.email }}</td>
+        <td>{{ contact.email_validate_date }}</td>
+        <td>{{ contact.email_validate_code }}</td>
+        <td>{{ contact.email_validate_msg }}</td>
+        <td>
+            <a href="{{ url_for('edit', id=contact.id) }}" class="btn btn-primary btn-sm">编辑</a>
+            <form method="post" action="{{ url_for('validate', id=contact.id) }}" style="display: inline-block;">
+                <button type="submit" class="btn btn-primary btn-sm">验证</button>
+            </form>
+            <form method="post" action="{{ url_for('delete', id=contact.id) }}" style="display: inline-block;">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('是否删除联系人？')">删除
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ pagination.links }}
+<p>
+<a href="{{ url_for('add') }}" class="btn btn-success">添加联系人</a>
+<a href="{{ url_for('export') }}" class="btn btn-primary">导出 CSV</a>
+<a href="{{ url_for('import_data') }}" class="btn btn-secondary">导入 CSV</a>
+</p>
+
+<hr/>
+<p>
+<form method="post" action="{{ url_for('import_emails') }}" style="display: inline-block;">
+    <h2>导入邮箱</h2>
+    <div class="form-group">
+        请输入邮件地址，每行一个：<br>
+        <textarea name="email_list" placeholder="邮件地址，每行一个" style="width: 400px;" rows="10"></textarea>
+        <br>
+        <button type="submit" class="btn btn-primary" onclick="return confirm('是否确定要提交？')">提交</button>
+    </div>
+</form>
+</p>
+<hr/>
+<p>
+<form method="post" action="{{ url_for('validate_batch') }}" style="display: inline-block;">
+    <h2>批量验证邮箱</h2>
+    <div class="form-group">
+        请输入需要验证的邮箱数量：
+        <input type="text" name="count" value="100" placeholder="验证数量">
+        <button type="submit" class="btn btn-primary" onclick="return confirm('是否确定要验证？')">验证</button>
+    </div>
+</form>
+</p>
+<hr/>
+<p>
+<form method="post" action="{{ url_for('delete_all') }}" style="display: inline-block;">
+    <h2>删除全部联系人</h2>
+    <div class="form-group">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('是否确定要删除？请务必先导出记录！')">删除全部联系人</button>
+    </div>
+</form>
+</p>
+{% endblock %}

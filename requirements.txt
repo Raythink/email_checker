@@ -7,7 +7,3 @@ dnspython
 flask_migrate
 flask_login
 flask-paginate
-gunicorn
-
-validate_email
-email_validate

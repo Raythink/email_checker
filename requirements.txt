@@ -1,0 +1,13 @@
+flask
+sqlalchemy
+flask_sqlalchemy
+flask_wtf
+wtforms
+dnspython
+flask_migrate
+flask_login
+flask-paginate
+gunicorn
+
+validate_email
+email_validate
